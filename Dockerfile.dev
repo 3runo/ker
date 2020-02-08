@@ -1,0 +1,26 @@
+FROM node:13-alpine AS builder 
+RUN apk add g++ make python
+
+# Define workig directory inside the container
+RUN mkdir /app
+WORKDIR /app
+
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
+
+# Install dependencies
+COPY ./package-lock.json ./package-lock.json
+COPY ./package.json ./package.json
+COPY ./tsconfig.json ./tsconfig.json
+RUN npm ci
+
+# Coping the application files 
+COPY ./public ./public
+COPY ./src ./src
+
+# Execute npm script "start"
+CMD [ "npm", "start" ]
+
+# docker build -f Dockerfile.dev -t 3runo/ker-client .
+# docker run -p 3000:3000 --rm -it 3runo/ker-client
+# docker exec -it 319bdcabf259 sh 

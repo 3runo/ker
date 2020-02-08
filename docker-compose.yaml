@@ -1,0 +1,15 @@
+version: "3"
+services:
+  client:
+    container_name: client
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /c/Users/bruno/git/ker/public:/app/public
+      - /c/Users/bruno/git/ker/src:/app/src
+      - /c/Users/bruno/git/ker/tsconfig.json:/app/tsconfig.json
+    environment:
+      - NODE_ENV=development
