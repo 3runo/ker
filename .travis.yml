@@ -11,10 +11,10 @@ script:
 deploy:
   provider: elasticbeanstalk
   region: "us-east-2"
-  app: "ker-client"
-  env: "KerClient-env"
+  app: "ker-client-01"
+  env: "KerClient01-env"
   bucket: "elasticbeanstalk-us-east-2-704958320533"
-  bucket_path: "ker-client"
+  bucket_path: "ker-client-01"
   on:
     branch: master
   access_key_id: "$AWS_ACCESS_KEY"
