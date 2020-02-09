@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 export default function PatientList() {
   return (
     <>
+      <h4>Patient List</h4>
       <Table striped bordered hover>
         <thead>
           <tr>

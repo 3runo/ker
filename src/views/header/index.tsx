@@ -9,7 +9,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 export default function Header() {
   return (
     <>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" className="mb-3">
         <Navbar.Brand href="#home">Ker</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">

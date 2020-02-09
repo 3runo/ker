@@ -1,0 +1,9 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -f Dockerfile.dev -t 3runo/ker-client .
+
+script:
+  - docker run 3runo/ker-client npm run test:ci
