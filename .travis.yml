@@ -1,4 +1,4 @@
-sudo: required
+os: linux
 services:
   - docker
 
@@ -13,10 +13,9 @@ deploy:
   region: "us-east-2"
   app: "ker-client"
   env: "KerClient-env"
-  bucket_name: "elasticbeanstalk-us-east-2-704958320533"
+  bucket: "elasticbeanstalk-us-east-2-704958320533"
   bucket_path: "ker-client"
   on:
     branch: master
   access_key_id: "$AWS_ACCESS_KEY"
-  secret_access_key:
-    secure: "$AWS_SECRET_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
