@@ -26,5 +26,5 @@ COPY --from=builder /app/build /usr/share/nginx/html
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
-# docker build -t 3runo/ker-client-prod .
-# docker run -p 8080:80 --rm -it 3runo/ker-client-prod
+# docker build -t 3runo/ker-client .
+# docker run -p 8080:80 --rm -it 3runo/ker-client

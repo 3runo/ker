@@ -22,6 +22,6 @@ COPY ./src ./src
 # Execute npm script "start"
 CMD [ "npm", "start" ]
 
-# docker build -f Dockerfile.dev -t 3runo/ker-client .
-# docker run -p 3000:3000 --rm -it 3runo/ker-client
+# docker build -f Dockerfile.dev -t 3runo/ker-client-dev .
+# docker run -p 3000:3000 --rm -it 3runo/ker-client-dev
 # docker exec -it 319bdcabf259 sh 
