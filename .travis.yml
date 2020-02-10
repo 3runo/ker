@@ -7,6 +7,7 @@ before_install:
 
 script:
   - docker run 3runo/ker-client npm run test:ci
+  - docker run 3runo/ker-client npm run audit:ci
 
 deploy:
   provider: elasticbeanstalk
