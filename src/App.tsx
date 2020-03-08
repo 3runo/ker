@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import Header from "./views/header";
 import Home from "./views/home";
 import PatientForm from "./views/patient-form";
-import PatientList from "./views/patient-list";
+import PatientList from "./views/patient-list/container";
 
 function PatientDetail() {
   return <h4>PatientDetail</h4>;
