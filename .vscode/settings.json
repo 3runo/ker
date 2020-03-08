@@ -1,0 +1,23 @@
+{
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "files.eol": "\n",
+  "editor.autoClosingOvertype": "never",
+  "editor.autoClosingQuotes": "never",
+  "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
+  "editor.rulers": [80],
+  "workbench.colorCustomizations": {
+    "editorRuler.foreground": "#310029",
+    "statusBar.background": "#b10093"
+  },
+  "code-runner.clearPreviousOutput": true,
+  "cSpell.words": [
+    "Interop",
+    "browserslist",
+    "entrypoint",
+    "esnext",
+    "runo"
+  ],
+  "docker.defaultRegistryPath": "3runo"
+}
