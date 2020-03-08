@@ -10,15 +10,16 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Install dependencies
-COPY ./package-lock.json ./package-lock.json
+# Install dependencies
+COPY ./yarn.lock ./yarn.lock
 COPY ./package.json ./package.json
 COPY ./tsconfig.json ./tsconfig.json
-RUN npm ci
+RUN yarn install
 
 # Coping the application files 
 COPY ./public ./public
 COPY ./src ./src
-RUN npm run build
+RUN yarn build
 
 # production environment
 FROM nginx:1.17-alpine
