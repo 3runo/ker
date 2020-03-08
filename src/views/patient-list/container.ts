@@ -1,17 +1,16 @@
+import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import {
   fetchPatientsAction,
   PatientsState
 } from "../../state/reducers/patients/";
 import PatientList from "./index";
-import { AppDispatch } from "../../state/store";
 
 function mapStateToProps(state: any) {
-  const stateFromStore = { ...state.patients };
-  return stateFromStore;
+  return { ...state.patients };
 }
 
-function mapDispatchToProps(dispatch: AppDispatch): unknown {
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchPatients: () => dispatch(fetchPatientsAction({ a: 1 }))
   };

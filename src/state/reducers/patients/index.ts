@@ -1,9 +1,15 @@
 import { Patient } from "../../../types/patients";
 
+// Types
 export type PatientsState = {
   list: Array<Patient>;
   loadingMap: { fetching?: boolean; saving?: boolean };
   errorMap: { fetching?: string; saving?: string };
+};
+
+export type PatientsAction<T = any> = {
+  type: "PATIENTS_FETCH" | "PATIENTS_FETCH_SUCCESS" | "PATIENTS_FETCH_FAIL";
+  payload: T;
 };
 
 export const initialState: PatientsState = {
@@ -57,18 +63,18 @@ export const initialState: PatientsState = {
   errorMap: {}
 };
 
-// ACTIONS
-export function fetchPatientsAction(payload: Object) {
+// Actions Creators
+export function fetchPatientsAction(payload: Object): PatientsAction {
   return {
     type: "PATIENTS_FETCH",
     payload
   };
 }
 
-// REDUCER
+// Reducer
 export function patientsReducer(
   state: PatientsState = initialState,
-  action: any
+  action: PatientsAction
 ) {
   if (action.type === "PATIENTS_FETCH") {
     return {
@@ -93,5 +99,6 @@ export function patientsReducer(
       errorMap: { ...state.errorMap, fetching: action.payload }
     };
   }
+
   return state;
 }
