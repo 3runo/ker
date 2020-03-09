@@ -1,6 +1,11 @@
-import { Patient } from "../../../types/patients";
+import { Patient } from "../../types/patients";
 
 // Types
+export type PatientActions =
+  | "PATIENTS_FETCH"
+  | "PATIENTS_FETCH_SUCCESS"
+  | "PATIENTS_FETCH_FAIL";
+
 export type PatientsState = {
   list: Array<Patient>;
   loadingMap: { fetching?: boolean; saving?: boolean };
@@ -8,7 +13,7 @@ export type PatientsState = {
 };
 
 export type PatientsAction<T = any> = {
-  type: "PATIENTS_FETCH" | "PATIENTS_FETCH_SUCCESS" | "PATIENTS_FETCH_FAIL";
+  type: PatientActions;
   payload: T;
 };
 
@@ -67,6 +72,20 @@ export const initialState: PatientsState = {
 export function fetchPatientsAction(payload: Object): PatientsAction {
   return {
     type: "PATIENTS_FETCH",
+    payload
+  };
+}
+
+export function fetchPatientsSuccessAction(payload: Object): PatientsAction {
+  return {
+    type: "PATIENTS_FETCH_SUCCESS",
+    payload
+  };
+}
+
+export function fetchPatientsFailAction(payload: Object): PatientsAction {
+  return {
+    type: "PATIENTS_FETCH_FAIL",
     payload
   };
 }

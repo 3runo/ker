@@ -1,5 +1,5 @@
 import compose from "lodash/fp/compose";
-import { getAccountSummarySchema } from "./schema";
+import { formatPatientsResponse } from "./schema";
 
 type TFetchInit = RequestInit & { url: string };
 type TDefineFetch = (url: string, token?: string, payload?: any) => TFetchInit;
@@ -40,6 +40,6 @@ function mergeFetchConfig({ url, headers, ...rest }: TFetchInit) {
   }).then(toJson);
 }
 
-export function getAccountSummary(token: string) {
-  return getJson("/account-summary", token).then(getAccountSummarySchema);
+export function getPatients(token: string) {
+  return getJson("/patients", token).then(formatPatientsResponse);
 }

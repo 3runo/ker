@@ -2,22 +2,25 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import {
   fetchPatientsAction,
-  PatientsState
-} from "../../state/reducers/patients/";
+  fetchPatientsSuccessAction,
+  fetchPatientsFailAction,
+  PatientsState,
+  PatientActions
+} from "../../state/patients/";
 import PatientList from "./index";
+import { getPatients } from "../../helpers/api";
 
-function mapStateToProps(state: any) {
-  return { ...state.patients };
-}
+const mapStateToProps = (state: any) => ({ ...state.patients });
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchPatients: function fetchPatientsThunk(payload: Object) {
+    dispatch(fetchPatientsAction(payload));
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    fetchPatients: () => dispatch(fetchPatientsAction({ a: 1 }))
-  };
-}
+    return getPatients("token")
+      .then(response => dispatch(fetchPatientsSuccessAction(response)))
+      .catch(response => dispatch(fetchPatientsFailAction(response)));
+  }
+});
 
-export type TProps = PatientsState & {
-  fetchPatients: () => { type: string; payload: Object };
-};
-
+type TMap = { fetchPatients: () => { type: PatientActions; payload: Object } };
+export type TProps = PatientsState & TMap;
 export default connect(mapStateToProps, mapDispatchToProps)(PatientList);

@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
 import { TProps } from "./container";
 
-export default function PatientList(props: TProps) {
+export default function PatientList({ fetchPatients, list }: TProps) {
+  useEffect(() => {
+    fetchPatients();
+  }, [fetchPatients]);
+
   return (
     <>
       <h4>Patient List</h4>
@@ -15,7 +19,7 @@ export default function PatientList(props: TProps) {
           </tr>
         </thead>
         <tbody>
-          {props.list.map(patient => {
+          {list.map(patient => {
             return (
               <tr key={patient.uuid}>
                 <td>{patient.name}</td>

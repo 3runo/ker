@@ -1,4 +1,5 @@
 import getOr from "lodash/fp/getOr";
+import { Patient } from "../types/patients";
 import { hasError } from "./core";
 
 type TReject = Promise<never>;
@@ -26,14 +27,22 @@ function errorDetailReducer(acc: Record<any, any>, detail: TErrorDetail) {
   return acc;
 }
 
-export function getAccountSummarySchema(payload: any): Promise<never> | any {
+export function formatPatientsResponse(payload: any): Promise<never> | any {
   return hasError(payload)
-    ? Promise.reject(errorWithCode("summary", payload))
-    : {
-        availableBtcBalance: payload.data.available_btc_balance,
-        marketEvaluation: payload.data.market_evaluation,
-        withdrawable: payload.data.withdrawable
-      };
+    ? Promise.reject(errorWithCode("patients", payload))
+    : payload.Items.map((patient: Patient) => {
+        return {
+          address: patient.address,
+          birthday: patient.birthday,
+          created: new Date(patient.created),
+          email: patient.email,
+          firstContact: patient.firstContact,
+          name: patient.name,
+          notes: patient.notes,
+          phone: patient.phone,
+          uuid: patient.uuid
+        };
+      });
 }
 
 export function getDomainCashBackSchema(payload: any): TReject | any {
