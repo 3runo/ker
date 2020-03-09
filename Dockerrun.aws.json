@@ -1,0 +1,25 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "client",
+      "hostname": "client",
+      "essential": false,
+      "image": "3runo/ker-client"
+    },
+    {
+      "name": "server",
+      "hostname": "api",
+      "essential": false,
+      "image": "3runo/ker-server"
+    },
+    {
+      "name": "route",
+      "hostname": "route",
+      "essential": true,
+      "image": "3runo/ker-route",
+      "portMappings": [{ "hostPort": 80, "containerPort": 80 }],
+      "links": ["server", "client"]
+    }
+  ]
+}

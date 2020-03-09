@@ -13,6 +13,8 @@
   },
   "code-runner.clearPreviousOutput": true,
   "cSpell.words": [
+    "AWSEB",
+    "Dockerrun",
     "Interop",
     "Middlewares",
     "browserslist",

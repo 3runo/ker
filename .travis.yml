@@ -19,14 +19,16 @@ after_success:
   - docker push 3runo/ker-route
   - docker push 3runo/ker-server
   - docker push 3runo/ker-client
-# deploy:
-#   provider: elasticbeanstalk
-#   region: "us-east-2"
-#   app: "ker-client-01"
-#   env: "KerClient01-env"
-#   bucket: "elasticbeanstalk-us-east-2-704958320533"
-#   bucket_path: "ker-client-01"
-#   on:
-#     branch: master
-#   access_key_id: "$AWS_ACCESS_KEY"
-#   secret_access_key: "$AWS_SECRET_KEY"
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-2"
+  app: "ker"
+  env: "Ker-env"
+  bucket: "elasticbeanstalk-us-east-2-704958320533"
+  bucket_path: "ker"
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
