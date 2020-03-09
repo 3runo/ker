@@ -8,8 +8,8 @@ services:
     ports:
       - "4000:4000"
     volumes:
-      - /Users/brunobatista/git/ker/server/index.js:/app/index.js
-      - /Users/brunobatista/git/ker/server/src:/app/src
+      - /c/Users/bruno/git/ker/server/index.js:/app/index.js
+      - /c/Users/bruno/git/ker/server/src:/app/src
     environment:
       - NODE_ENV=development
       - PORT=4000
@@ -25,9 +25,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /Users/brunobatista/git/ker/client/public:/app/public
-      - /Users/brunobatista/git/ker/client/src:/app/src
-      - /Users/brunobatista/git/ker/client/tsconfig.json:/app/tsconfig.json
+      - /c/Users/bruno/git/ker/client/public:/app/public
+      - /c/Users/bruno/git/ker/client/src:/app/src
+      - /c/Users/bruno/git/ker/client/tsconfig.json:/app/tsconfig.json
     environment:
       - NODE_ENV=development
       - REACT_APP_SERVER_URI=${REACT_APP_SERVER_URI}
