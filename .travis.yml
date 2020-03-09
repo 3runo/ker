@@ -3,6 +3,7 @@ services:
   - docker
 
 before_install:
+  - cd client/
   - docker build -f Dockerfile.dev -t 3runo/ker-client .
 
 script:

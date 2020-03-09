@@ -9,7 +9,7 @@
   "editor.rulers": [80],
   "workbench.colorCustomizations": {
     "editorRuler.foreground": "#310029",
-    "statusBar.background": "#b10093"
+    "statusBar.background": "#005757"
   },
   "code-runner.clearPreviousOutput": true,
   "cSpell.words": [
