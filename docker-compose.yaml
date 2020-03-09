@@ -1,7 +1,7 @@
 version: "3"
 services:
-  server:
-    container_name: server
+  api:
+    container_name: api
     build:
       context: ./server
       dockerfile: Dockerfile.dev
@@ -19,6 +19,8 @@ services:
 
   client:
     container_name: client
+    depends_on:
+      - api
     build:
       context: ./client
       dockerfile: Dockerfile.dev
@@ -30,4 +32,16 @@ services:
       - /Users/brunobatista/git/ker/client/tsconfig.json:/app/tsconfig.json
     environment:
       - NODE_ENV=development
-      - REACT_APP_SERVER_URI=${REACT_APP_SERVER_URI}
+      - REACT_APP_SERVER_URI=http://localhost:8080/api
+
+  route:
+    container_name: route
+    restart: always
+    depends_on:
+      - api
+      - client
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8080:80"

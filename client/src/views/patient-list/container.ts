@@ -16,8 +16,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
     dispatch(fetchPatientsAction(payload));
 
     return getPatients("token")
-      .then(response => dispatch(fetchPatientsSuccessAction(response)))
-      .catch(response => dispatch(fetchPatientsFailAction(response)));
+      .then(response => {
+        console.log(response);
+        dispatch(fetchPatientsSuccessAction(response));
+      })
+      .catch(response => {
+        console.log(response);
+        return dispatch(fetchPatientsFailAction(response));
+      });
   }
 });
 

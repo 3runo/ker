@@ -10,7 +10,6 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Install dependencies
-# Install dependencies
 COPY ./yarn.lock ./yarn.lock
 COPY ./package.json ./package.json
 COPY ./tsconfig.json ./tsconfig.json
@@ -21,10 +20,11 @@ COPY ./public ./public
 COPY ./src ./src
 RUN yarn build
 
-# production environment
+# production environment on port 3000
 FROM nginx:1.17-alpine
+EXPOSE 3000
+COPY ./nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /app/build /usr/share/nginx/html
-EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 # docker build -t 3runo/ker-client .

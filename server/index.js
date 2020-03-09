@@ -1,4 +1,5 @@
 const app = require("express")();
+// const cors = require("cors");
 const bodyParser = require("body-parser");
 const compression = require("compression");
 const { onAppListen } = require("./src/config")(app);
@@ -11,6 +12,7 @@ const isDevelopment = process.env.NODE_ENV === "development";
 
 // Middlewares
 app.use(compression()); // compresses requests
+// app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true }));
 
