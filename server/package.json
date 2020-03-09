@@ -1,0 +1,24 @@
+{
+  "name": "ker-server",
+  "version": "1.0.0",
+  "description": "Ker project server",
+  "repository": "https://github.com/3runo/ker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "Bruno Batista",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.614.0",
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "uuid": "^7.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

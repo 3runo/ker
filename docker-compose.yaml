@@ -1,15 +1,33 @@
 version: "3"
 services:
-  client:
-    container_name: client
+  server:
+    container_name: server
     build:
       context: ./
       dockerfile: Dockerfile.dev
     ports:
-      - "3000:3000"
+      - "4000:4000"
     volumes:
-      - /c/Users/bruno/git/ker/public:/app/public
-      - /c/Users/bruno/git/ker/src:/app/src
-      - /c/Users/bruno/git/ker/tsconfig.json:/app/tsconfig.json
+      - /Users/brunobatista/git/ker-server/index.js:/app/index.js
+      - /Users/brunobatista/git/ker-server/src:/app/src
     environment:
       - NODE_ENV=development
+      - PORT=4000
+      - AWS_DB_REGION=${AWS_DB_REGION}
+      - AWS_DB_ACCESS_KEY_ID=${AWS_DB_ACCESS_KEY_ID}
+      - AWS_DB_SECRET_ACCESS_KEY=${AWS_DB_SECRET_ACCESS_KEY}
+
+  client:
+    container_name: client
+    build:
+      context: ../ker
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"
+    volumes:
+      - /Users/brunobatista/git/ker/public:/app/public
+      - /Users/brunobatista/git/ker/src:/app/src
+      - /Users/brunobatista/git/ker/tsconfig.json:/app/tsconfig.json
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_SERVER_URI=localhost://4000

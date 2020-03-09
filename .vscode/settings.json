@@ -15,9 +15,11 @@
   "cSpell.words": [
     "Interop",
     "browserslist",
+    "brunobatista",
     "entrypoint",
     "esnext",
     "runo"
   ],
-  "docker.defaultRegistryPath": "3runo"
+  "docker.defaultRegistryPath": "3runo",
+  "git.ignoreLimitWarning": true
 }
