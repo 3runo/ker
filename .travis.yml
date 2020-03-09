@@ -3,21 +3,30 @@ services:
   - docker
 
 before_install:
-  - cd client/
-  - docker build -f Dockerfile.dev -t 3runo/ker-client .
+  - docker build -t 3runo/ker-client-dev -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run 3runo/ker-client npm run test:ci
-  - docker run 3runo/ker-client npm run audit:ci
+  - docker run 3runo/ker-client-dev yarn test:ci
+  - docker run 3runo/ker-client-dev yarn audit:ci
 
-deploy:
-  provider: elasticbeanstalk
-  region: "us-east-2"
-  app: "ker-client-01"
-  env: "KerClient01-env"
-  bucket: "elasticbeanstalk-us-east-2-704958320533"
-  bucket_path: "ker-client-01"
-  on:
-    branch: master
-  access_key_id: "$AWS_ACCESS_KEY"
-  secret_access_key: "$AWS_SECRET_KEY"
+after_success:
+  - docker build -t 3runo/ker-route ./nginx
+  - docker build -t 3runo/ker-server ./server
+  - docker build -t 3runo/ker-client ./client
+
+  - echo "$DOCKER_PW" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push 3runo/ker-route
+  - docker push 3runo/ker-server
+  - docker push 3runo/ker-client
+# deploy:
+#   provider: elasticbeanstalk
+#   region: "us-east-2"
+#   app: "ker-client-01"
+#   env: "KerClient01-env"
+#   bucket: "elasticbeanstalk-us-east-2-704958320533"
+#   bucket_path: "ker-client-01"
+#   on:
+#     branch: master
+#   access_key_id: "$AWS_ACCESS_KEY"
+#   secret_access_key: "$AWS_SECRET_KEY"
