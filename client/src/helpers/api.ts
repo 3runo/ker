@@ -6,7 +6,6 @@ type TDefineFetch = (url: string, token?: string, payload?: any) => TFetchInit;
 type TFetch = (url: string, token?: string, payload?: any) => Promise<any>;
 type TPromise = Promise<any>;
 
-const { REACT_APP_SERVER_URI: SERVER_URI } = process.env;
 const getJson: TFetch = compose([mergeFetchConfig, defineFetch("GET")]);
 // const postJson: TFetch = compose([mergeFetchConfig, defineFetch("POST")]);
 
@@ -29,7 +28,7 @@ function defineFetch(method?: string): TDefineFetch {
 }
 
 function mergeFetchConfig({ url, headers, ...rest }: TFetchInit) {
-  return fetch(`${SERVER_URI}${url}`, {
+  return fetch(`/api${url}`, {
     cache: "no-cache",
     credentials: "same-origin",
     headers: { "Content-Type": "application/json", ...headers },

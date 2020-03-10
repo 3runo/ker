@@ -32,7 +32,6 @@ services:
       - /c/Users/bruno/git/ker/client/tsconfig.json:/app/tsconfig.json
     environment:
       - NODE_ENV=development
-      - REACT_APP_SERVER_URI=http://localhost:8080/api
 
   route:
     container_name: route
