@@ -2,54 +2,74 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
+import { TProps } from "./container";
 
-export default function PatientForm() {
+export default function PatientForm({ onFormSubmit }: TProps) {
   return (
-    <Form>
+    <Form onSubmit={onFormSubmit}>
       <Form.Row>
-        <Form.Group as={Col} controlId="formGridEmail">
+        <Form.Group as={Col} controlId="email">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" />
+          <Form.Control
+            type="email"
+            name="input-email"
+            placeholder="Enter email"
+            required
+          />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" />
+        <Form.Group as={Col} controlId="name">
+          <Form.Label>Name</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Name"
+            name="input-name"
+            required
+          />
         </Form.Group>
       </Form.Row>
-
-      <Form.Group controlId="formGridAddress1">
-        <Form.Label>Address</Form.Label>
-        <Form.Control placeholder="1234 Main St" />
-      </Form.Group>
-
-      <Form.Group controlId="formGridAddress2">
-        <Form.Label>Address 2</Form.Label>
-        <Form.Control placeholder="Apartment, studio, or floor" />
-      </Form.Group>
 
       <Form.Row>
-        <Form.Group as={Col} controlId="formGridCity">
-          <Form.Label>City</Form.Label>
-          <Form.Control />
+        <Form.Group as={Col} controlId="phone">
+          <Form.Label>Phone</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter Phone"
+            name="input-phone"
+          />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridState">
-          <Form.Label>State</Form.Label>
-          <Form.Control as="select" value="Choose...">
-            <option>Choose...</option>
-            <option>...</option>
-          </Form.Control>
+        <Form.Group as={Col} controlId="birthday">
+          <Form.Label>Birthday</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Birthday"
+            name="input-birthday"
+          />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="formGridZip">
-          <Form.Label>Zip</Form.Label>
-          <Form.Control />
+        <Form.Group as={Col} controlId="firstContact">
+          <Form.Label>First Contact</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="From where you heard about me"
+            name="input-firstContact"
+          />
         </Form.Group>
       </Form.Row>
 
-      <Form.Group id="formGridCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
+      <Form.Group controlId="address">
+        <Form.Label>Address</Form.Label>
+        <Form.Control placeholder="1234 Main St" name="input-address" />
+      </Form.Group>
+
+      <Form.Group controlId="notes">
+        <Form.Label>Notes</Form.Label>
+        <textarea
+          placeholder="Notes"
+          className="form-control"
+          name="input-notes"
+        />
       </Form.Group>
 
       <Button variant="primary" type="submit">

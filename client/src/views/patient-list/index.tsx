@@ -1,8 +1,13 @@
 import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 import { TProps } from "./container";
 
-export default function PatientList({ fetchPatients, list }: TProps) {
+export default function PatientList({
+  deletePatient,
+  fetchPatients,
+  list
+}: TProps) {
   useEffect(() => {
     fetchPatients();
   }, [fetchPatients]);
@@ -16,6 +21,7 @@ export default function PatientList({ fetchPatients, list }: TProps) {
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -25,6 +31,17 @@ export default function PatientList({ fetchPatients, list }: TProps) {
                 <td>{patient.name}</td>
                 <td>{patient.email}</td>
                 <td>{patient.phone}</td>
+                <td>
+                  <Button
+                    variant="outline-danger"
+                    size="sm"
+                    onClick={() => {
+                      deletePatient(patient.uuid);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </td>
               </tr>
             );
           })}

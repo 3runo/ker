@@ -1,15 +1,22 @@
+import { omit } from 'lodash/fp';
 import { Patient } from "../../types/patients";
 
 // Types
 export type PatientActions =
   | "PATIENTS_FETCH"
   | "PATIENTS_FETCH_SUCCESS"
-  | "PATIENTS_FETCH_FAIL";
+  | "PATIENTS_FETCH_FAIL"
+  | "PATIENTS_SAVE"
+  | "PATIENTS_SAVE_SUCCESS"
+  | "PATIENTS_SAVE_FAIL"
+  | "PATIENTS_DELETE"
+  | "PATIENTS_DELETE_SUCCESS"
+  | "PATIENTS_DELETE_FAIL";
 
 export type PatientsState = {
   list: Array<Patient>;
-  loadingMap: { fetching?: boolean; saving?: boolean };
-  errorMap: { fetching?: string; saving?: string };
+  loadingMap: { fetching?: boolean; saving?: boolean; removing?: boolean };
+  errorMap: { fetching?: string; saving?: string; removing?: string };
 };
 
 export type PatientsAction<T = any> = {
@@ -18,106 +25,110 @@ export type PatientsAction<T = any> = {
 };
 
 export const initialState: PatientsState = {
-  list: [
-    {
-      firstContact: "firstContact",
-      notes: "notes",
-      created: 1581367248383,
-      uuid: "115e02f6-e88d-409c-97a1-1c3713048894",
-      address: "address",
-      email: "name@domain.com",
-      phone: "phone",
-      name: "name",
-      birthday: "birthday"
-    },
-    {
-      firstContact: "firstContact",
-      notes: "notes",
-      created: 1581367170428,
-      uuid: "e54e4a5f-aaf7-4048-8900-00bc5b21ae6a",
-      address: "address",
-      email: "name@domain.com",
-      phone: "phone",
-      name: "name",
-      birthday: "birthday"
-    },
-    {
-      firstContact: "firstContact",
-      notes: "notes",
-      created: 1581367167488,
-      uuid: "9bbe2f77-8757-416e-8e49-05add223c3e9",
-      address: "address",
-      email: "name@domain.com",
-      phone: "phone",
-      name: "name",
-      birthday: "birthday"
-    },
-    {
-      firstContact: "firstContact",
-      notes: "notes",
-      created: 1581367183149,
-      uuid: "2a7179c3-aaac-4c57-ba49-a54dc05828c2",
-      address: "address",
-      email: "name@domain.com",
-      phone: "phone",
-      name: "name",
-      birthday: "birthday"
-    }
-  ],
+  list: [],
   loadingMap: {},
   errorMap: {}
 };
 
-// Actions Creators
-export function fetchPatientsAction(payload: Object): PatientsAction {
-  return {
-    type: "PATIENTS_FETCH",
-    payload
-  };
-}
-
-export function fetchPatientsSuccessAction(payload: Object): PatientsAction {
-  return {
-    type: "PATIENTS_FETCH_SUCCESS",
-    payload
-  };
-}
-
-export function fetchPatientsFailAction(payload: Object): PatientsAction {
-  return {
-    type: "PATIENTS_FETCH_FAIL",
-    payload
-  };
-}
+const omitFetching = omit(['fetching']);
+const omitSaving = omit(['saving']);
+const omitRemoving = omit(['removing']);
 
 // Reducer
 export function patientsReducer(
   state: PatientsState = initialState,
   action: PatientsAction
-) {
+): PatientsState {
   if (action.type === "PATIENTS_FETCH") {
     return {
       ...state,
       loadingMap: { ...state.loadingMap, fetching: true },
-      errorMap: { ...state.errorMap, fetching: undefined }
+      errorMap: omitFetching(state.errorMap),
     };
   }
 
   if (action.type === "PATIENTS_FETCH_SUCCESS") {
     return {
       list: action.payload,
-      loadingMap: { ...state.loadingMap, fetching: undefined },
-      errorMap: { ...state.errorMap, fetching: undefined }
+      loadingMap: omitFetching(state.loadingMap),
+      errorMap: omitFetching(state.errorMap)
     };
   }
 
   if (action.type === "PATIENTS_FETCH_FAIL") {
     return {
       ...state,
-      loadingMap: { ...state.loadingMap, fetching: undefined },
+      loadingMap: omitFetching(state.loadingMap),
       errorMap: { ...state.errorMap, fetching: action.payload }
+    };
+  }
+
+  if (action.type === "PATIENTS_SAVE") {
+    return {
+      ...state,
+      loadingMap: { ...state.loadingMap, saving: true },
+      errorMap: omitSaving(state.errorMap),
+    };
+  }
+
+  if (action.type === "PATIENTS_SAVE_SUCCESS") {
+    return {
+      ...state,
+      loadingMap: omitSaving(state.loadingMap),
+      errorMap: omitSaving(state.errorMap)
+    };
+  }
+
+  if (action.type === "PATIENTS_SAVE_FAIL") {
+    return {
+      ...state,
+      loadingMap: omitSaving(state.loadingMap),
+      errorMap: { ...state.errorMap, saving: action.payload }
+    };
+  }
+
+  if (action.type === "PATIENTS_DELETE") {
+    return {
+      ...state,
+      loadingMap: { ...state.loadingMap, removing: true },
+      errorMap: omitRemoving(state.errorMap),
+    };
+  }
+
+  if (action.type === "PATIENTS_DELETE_SUCCESS") {
+    return {
+      ...state,
+      loadingMap: omitRemoving(state.loadingMap),
+      errorMap: omitRemoving(state.errorMap)
+    };
+  }
+
+  if (action.type === "PATIENTS_DELETE_FAIL") {
+    return {
+      ...state,
+      loadingMap: omitRemoving(state.loadingMap),
+      errorMap: { ...state.errorMap, removing: action.payload }
     };
   }
 
   return state;
 }
+
+// Actions Creators
+function actionCreator(type: PatientActions) {
+  return function action(payload: any) {
+    return { type, payload };
+  }
+}
+
+export const doFetchPatients = actionCreator("PATIENTS_FETCH");
+export const doFetchPatientsSuccess = actionCreator("PATIENTS_FETCH_SUCCESS");
+export const doFetchPatientsFail = actionCreator("PATIENTS_FETCH_FAIL");
+
+export const doSavePatient = actionCreator("PATIENTS_SAVE");
+export const doSavePatientSuccess = actionCreator("PATIENTS_SAVE_SUCCESS");
+export const doSavePatientFail = actionCreator("PATIENTS_SAVE_FAIL");
+
+export const doDeletePatient = actionCreator("PATIENTS_DELETE");
+export const doDeletePatientSuccess = actionCreator("PATIENTS_DELETE_SUCCESS");
+export const doDeletePatientFail = actionCreator("PATIENTS_DELETE_FAIL");

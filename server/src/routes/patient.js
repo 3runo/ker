@@ -22,19 +22,12 @@ function patients(req, res) {
 
 function patient(req, res) {
   if (req.method === "GET") {
-    const id = tryParseNumber(req.params.id);
-    const params = findInPatients({ id: { N: String(id) } });
+    const params = findInPatients({ uuid: { S: req.params.id } });
     dynamoDB.getItem(params, genericCB(res));
     return;
   } else if (req.method === "POST") {
     const params = addInPatients({
-      address: "address",
-      birthday: "birthday",
-      email: "name@domain.com",
-      firstContact: "firstContact",
-      name: "name",
-      notes: "notes",
-      phone: "phone",
+      ...req.body,
       created: new Date().getTime(),
       uuid: uuid.v4()
     });
@@ -42,7 +35,7 @@ function patient(req, res) {
     dynamoDBCli.put(params, genericCB(res));
     return;
   } else if (req.method === "DELETE") {
-    const params = findInPatients({ id: { N: "4" } });
+    const params = findInPatients({ uuid: { S: req.params.id } });
     dynamoDB.deleteItem(params, genericCB(res));
     return;
   }
