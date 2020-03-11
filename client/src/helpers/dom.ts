@@ -8,6 +8,10 @@ function formElementReducer(obj: StringObj, e: HTMLInputElement) {
   return obj;
 }
 
+function serializeFormValues(e: React.FormEvent<HTMLFormElement>): StringObj {
+  const form = e.currentTarget;
+  return createFormPayload(form.querySelectorAll('[name*="input"]'));
+}
 
 const createFormPayload: (list: NodeListOf<Element>) => StringObj = compose([
   reduce(formElementReducer, {}),
@@ -15,4 +19,4 @@ const createFormPayload: (list: NodeListOf<Element>) => StringObj = compose([
 ]);
 
 
-export { createFormPayload };
+export { createFormPayload, serializeFormValues };

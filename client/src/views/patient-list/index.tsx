@@ -1,43 +1,67 @@
-import React, { useEffect } from "react";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
-import { TProps } from "./container";
+import React, { useEffect } from 'react';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
+import Table from 'react-bootstrap/Table';
+import { TProps } from './container';
 
 export default function PatientList({
   deletePatient,
+  errorMap,
   fetchPatients,
-  list
+  list,
+  loadingMap,
 }: TProps) {
   useEffect(() => {
     fetchPatients();
   }, [fetchPatients]);
 
+  const onDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.dataset.id as string;
+    deletePatient(id, fetchPatients);
+  };
+
+  if (loadingMap.fetching) {
+    return <h6>Loading ...</h6>;
+  }
+
+  if (errorMap.fetching) {
+    return (
+      <Alert variant="danger">
+        <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+        {errorMap.fetching}
+        <Button variant="primary" onClick={fetchPatients}>
+          Reload
+        </Button>
+      </Alert>
+    );
+  }
+
   return (
     <>
       <h4>Patient List</h4>
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
         <thead>
           <tr>
             <th>Name</th>
-            <th>Email</th>
             <th>Phone</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {list.map(patient => {
+          {list.map((patient) => {
             return (
               <tr key={patient.uuid}>
-                <td>{patient.name}</td>
-                <td>{patient.email}</td>
+                <td>
+                  <div>{patient.name}</div>
+                  <small>{patient.email}</small>
+                </td>
                 <td>{patient.phone}</td>
                 <td>
                   <Button
-                    variant="outline-danger"
+                    variant="link"
                     size="sm"
-                    onClick={() => {
-                      deletePatient(patient.uuid);
-                    }}
+                    onClick={onDeleteButtonClick}
+                    data-id={patient.uuid}
                   >
                     Delete
                   </Button>

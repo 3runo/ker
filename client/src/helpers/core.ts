@@ -3,7 +3,7 @@ import curry from "lodash/fp/curry";
 type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
 
 function hasFetchError(payload: any) {
-  return /[45]0[0-9]/.exec(String(payload.code)) ? true : false;
+  return /[45]0[0-9]/.exec(String(payload.statusCode)) ? true : false;
 }
 
 export function hasFalseProperty(obj: Object): boolean {

@@ -7,26 +7,29 @@ import {
   PatientsState,
   PatientActions
 } from "../../state/patients/";
-import PatientForm from "./index";
-import { postPatient } from "../../helpers/api";
-import { createFormPayload } from "../../helpers/dom";
+import { postPatient } from "../../state/patients/api";
+import { serializeFormValues } from "../../helpers/dom";
+import PatientForm from "./";
+
+type TMap = {
+  onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => { type: PatientActions; payload: Object }
+};
+export type TProps = PatientsState & TMap;
 
 const mapStateToProps = (state: any) => ({ ...state.patients });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   onFormSubmit: function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const form = e.currentTarget;
-    const payload = createFormPayload(form.querySelectorAll('[name*="input"]'));
+    const payload = serializeFormValues(e);
 
     dispatch(doSavePatient(payload));
     return postPatient("inform-token-here", payload)
-      .then((response: any) => dispatch(doSavePatientSuccess(response)))
-      .catch((response: any) => dispatch(doSavePatientFail(response)));
+      .then(res => {
+        dispatch(doSavePatientSuccess(res));
+      })
+      .catch(({ message }) => dispatch(doSavePatientFail(message)));
   }
 });
 
-type TMap = { onFormSubmit: () => { type: PatientActions; payload: Object } };
-export type TProps = PatientsState & TMap;
 export default connect(mapStateToProps, mapDispatchToProps)(PatientForm);

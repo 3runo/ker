@@ -10,32 +10,34 @@ import {
   PatientsState,
   PatientActions
 } from "../../state/patients/";
-import PatientList from "./index";
-import { getPatients, deletePatient } from "../../helpers/api";
+import { getPatients, deletePatient } from "../../state/patients/api";
+import PatientList from "./";
+
+type TMap = {
+  fetchPatients: () => { type: PatientActions; payload: Object },
+  deletePatient: (uuid: string, callback?: Function) => { type: PatientActions; payload: Object }
+};
+export type TProps = PatientsState & TMap;
 
 const mapStateToProps = (state: any) => ({ ...state.patients });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPatients: function fetchPatientsThunk(payload: Object) {
     dispatch(doFetchPatients(payload));
-
     return getPatients("inform-token-here")
-      .then(response => dispatch(doFetchPatientsSuccess(response)))
-      .catch(response => dispatch(doFetchPatientsFail(response)));
+      .then(res => dispatch(doFetchPatientsSuccess(res)))
+      .catch(res => dispatch(doFetchPatientsFail(res)));
   },
-  deletePatient: function deletePatientThunk(uuid: string) {
-    dispatch(doDeletePatient(uuid));
 
-    // TODO: Call fetchPatients when deletion succeed
+  deletePatient: function deletePatientThunk(uuid: string, callback?: Function) {
+    dispatch(doDeletePatient(uuid));
     return deletePatient("inform-token-here", uuid)
-      .then(response => dispatch(doDeletePatientSuccess(response)))
-      .catch(response => dispatch(doDeletePatientFail(response)));
+      .then(res => {
+        dispatch(doDeletePatientSuccess(res))
+        if (typeof callback === "function") callback();
+      })
+      .catch(res => dispatch(doDeletePatientFail(res)));
   }
 });
 
-type TMap = {
-  fetchPatients: () => { type: PatientActions; payload: Object },
-  deletePatient: (uuid: string) => { type: PatientActions; payload: Object }
-};
-export type TProps = PatientsState & TMap;
 export default connect(mapStateToProps, mapDispatchToProps)(PatientList);
