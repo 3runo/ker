@@ -3,9 +3,12 @@
   "files.eol": "\n",
   "editor.autoClosingOvertype": "never",
   "editor.autoClosingQuotes": "never",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.fontFamily": "'Cascadia Code', Consolas, 'Courier New', monospace",
   "editor.fontLigatures": true,
+  "editor.formatOnSave": true,
   "editor.rulers": [80],
+  "editor.tabSize": 2,
   "workbench.colorCustomizations": {
     "editorRuler.foreground": "#310029",
     "statusBar.background": "#005757"
@@ -24,6 +27,10 @@
   ],
   "docker.defaultRegistryPath": "3runo",
   "git.ignoreLimitWarning": true,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

@@ -1,4 +1,4 @@
-import curry from "lodash/fp/curry";
+import curry from 'lodash/fp/curry';
 
 type ButtonEvent = React.MouseEvent<HTMLButtonElement>;
 
@@ -11,7 +11,7 @@ export function hasFalseProperty(obj: Object): boolean {
 }
 
 export function isString(item: any): boolean {
-  return typeof item === "string";
+  return typeof item === 'string';
 }
 
 export function isEmptyObj(obj?: Object) {
@@ -47,7 +47,7 @@ export function isMoreThanOneHour({ timestamp }: { timestamp: number }) {
 
 export function optimizeStringList(thing: string | Array<string | any>) {
   return Array.isArray(thing) && thing.every(isString)
-    ? thing.join(" ")
+    ? thing.join(' ')
     : thing;
 }
 
@@ -64,8 +64,8 @@ export function numberFormatter(
   isBitcoin: boolean = false,
   config: Intl.NumberFormatOptions | undefined = {}
 ) {
-  const currency = locale === "pt-BR" ? "BRL" : "USD"; // ToDo: Currency must come from API
-  const baseConfig = { style: isBitcoin ? "decimal" : "currency", currency };
+  const currency = locale === 'pt-BR' ? 'BRL' : 'USD'; // ToDo: Currency must come from API
+  const baseConfig = { style: isBitcoin ? 'decimal' : 'currency', currency };
   const formatter = new Intl.NumberFormat(locale, { ...baseConfig, ...config });
 
   return function formatNumber(n: number) {

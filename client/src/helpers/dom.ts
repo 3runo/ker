@@ -1,5 +1,5 @@
 import { compose, reduce } from 'lodash/fp';
-import { nodeListToArray } from "./core";
+import { nodeListToArray } from './core';
 
 type StringObj = Record<string, string>;
 
@@ -17,6 +17,5 @@ const createFormPayload: (list: NodeListOf<Element>) => StringObj = compose([
   reduce(formElementReducer, {}),
   nodeListToArray,
 ]);
-
 
 export { createFormPayload, serializeFormValues };

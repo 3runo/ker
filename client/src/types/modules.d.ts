@@ -1,30 +1,30 @@
-declare module "*.ico" {
+declare module '*.ico' {
   const path: string;
   export = path;
 }
 
-declare module "*.jpg" {
+declare module '*.jpg' {
   const path: string;
   export = path;
 }
 
-declare module "*.jpeg" {
+declare module '*.jpeg' {
   const path: string;
   export = path;
 }
 
-declare module "*.png" {
+declare module '*.png' {
   const path: string;
   export = path;
 }
 
-declare module "*.svg" {
+declare module '*.svg' {
   const path: string;
   export = path;
 }
 
-declare module "*.svgx" {
-  import * as React from "react";
+declare module '*.svgx' {
+  import * as React from 'react';
   const element: React.ComponentClass<React.SVGAttributes<SVGElement>>;
   export default element;
 }
