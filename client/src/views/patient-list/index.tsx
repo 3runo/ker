@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import { TProps } from './container';
+import { PatientListProps } from './container';
 
 export default function PatientList({
   deletePatient,
@@ -10,7 +10,7 @@ export default function PatientList({
   fetchPatients,
   list,
   loadingMap,
-}: TProps) {
+}: PatientListProps) {
   useEffect(() => {
     fetchPatients();
   }, [fetchPatients]);

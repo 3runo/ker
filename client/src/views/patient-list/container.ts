@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { RootState } from '../../state/store';
 import {
   doFetchPatients,
   doFetchPatientsSuccess,
@@ -13,16 +14,17 @@ import {
 import { getPatients, deletePatient } from '../../state/patients/api';
 import PatientList from './';
 
-type TMap = {
-  fetchPatients: () => { type: PatientActions; payload: Object };
+type StateProps = PatientsState;
+type OwnProps = {};
+type DispatchProps = {
+  fetchPatients: () => Promise<void | { type: PatientActions; payload: any }>;
   deletePatient: (
     uuid: string,
     callback?: Function
-  ) => { type: PatientActions; payload: Object };
+  ) => Promise<void | { type: PatientActions; payload: any }>;
 };
-export type TProps = PatientsState & TMap;
 
-const mapStateToProps = (state: any) => ({ ...state.patients });
+const mapStateToProps = (state: RootState) => ({ ...state.patients });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPatients: function fetchPatientsThunk(payload: Object) {
@@ -46,4 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PatientList);
+export type PatientListProps = StateProps & DispatchProps;
+export default connect<StateProps, DispatchProps, OwnProps>(
+  // @ts-ignore
+  mapStateToProps,
+  mapDispatchToProps
+)(PatientList as React.SFC<PatientListProps>);

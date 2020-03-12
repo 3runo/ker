@@ -3,14 +3,13 @@ import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import { TProps } from './container';
+import { PatientFormProps } from './container';
 
 export default function PatientForm({
   onFormSubmit,
   loadingMap,
   errorMap,
-}: TProps) {
-  console.log(loadingMap.saving, errorMap.saving);
+}: PatientFormProps) {
   const ref = useRef(-1);
   const [showError, setShowError] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);

@@ -1,5 +1,5 @@
 // Types
-export type PatientActions = 'AUTH' | 'AUTH_SUCCESS' | 'AUTH_FAIL';
+export type AuthActions = 'AUTH' | 'AUTH_SUCCESS' | 'AUTH_FAIL';
 
 export type AuthState = {
   errorMessage: string;
@@ -10,7 +10,7 @@ export type AuthState = {
 
 export const initialState = {
   errorMessage: '',
-  isAuthenticated: false,
+  isAuthenticated: true, // TODO: Implement authentication feature
   loading: false,
   token: '',
 };
