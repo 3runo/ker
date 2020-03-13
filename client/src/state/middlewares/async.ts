@@ -2,7 +2,6 @@ export default function dispatchAsyncAction({ dispatch }: any) {
   return function nextClosure(nextMiddleware: Function) {
     return function actionClosure(action: any) {
       const { payload, type, ...rest } = action;
-      console.info(action);
 
       if (!action.payload || !action.payload.then) {
         return nextMiddleware(action);
