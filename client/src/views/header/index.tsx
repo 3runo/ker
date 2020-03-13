@@ -2,9 +2,9 @@ import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
-import { HeaderProps } from './container';
+import { AuthState } from '../../state/auth/';
 
-export default function Header({ isAuthenticated }: HeaderProps) {
+export default function Header({ isAuthenticated }: AuthState) {
   return (
     <Navbar variant="light" bg="light" expand="lg" className="mb-3">
       <Navbar.Brand>

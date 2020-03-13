@@ -5,7 +5,7 @@
   "repository": "https://github.com/3runo/ker",
   "dependencies": {
     "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^10.0.0",
     "@testing-library/user-event": "^10.0.0",
     "lodash": "^4.17.15",
     "react": "^16.12.0",

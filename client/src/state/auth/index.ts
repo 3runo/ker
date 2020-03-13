@@ -23,6 +23,7 @@ export function authReducer(
   if (action.type === 'AUTH') {
     return { ...state, loading: true, errorMessage: '' };
   }
+
   if (action.type === 'AUTH_SUCCESS') {
     return {
       errorMessage: '',
@@ -31,6 +32,7 @@ export function authReducer(
       token: action.payload,
     };
   }
+
   if (action.type === 'AUTH_FAIL') {
     return {
       errorMessage: action.payload,
