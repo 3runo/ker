@@ -1,8 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
+import ConfirmModal from '../../components/confirm-modal';
 import { PatientListProps } from './container';
+
+const confirmModalState = {
+  isOpen: false,
+  msg: '',
+  onConfirm: () => {},
+};
 
 export default function PatientList({
   deletePatient,
@@ -11,18 +18,29 @@ export default function PatientList({
   list,
   loadingMap,
 }: PatientListProps) {
+  const [confirmModal, setConfirmModal] = useState(confirmModalState);
+
+  const toggleConfirmModal = () => setConfirmModal({ ...confirmModalState });
+
+  const onDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const id = e.currentTarget.dataset.id as string;
+    const name = e.currentTarget.dataset.name as string;
+    setConfirmModal({
+      isOpen: true,
+      msg: `Do you want to remove ${name}?`,
+      onConfirm: () => deletePatient(id, fetchPatients),
+    });
+  };
+
   useEffect(() => {
     fetchPatients();
   }, [fetchPatients]);
 
-  const onDeleteButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const id = e.currentTarget.dataset.id as string;
-    deletePatient(id, fetchPatients);
-  };
+  useEffect(() => {
+    if (loadingMap.removing) setConfirmModal({ ...confirmModalState });
+  }, [loadingMap.removing, setConfirmModal]);
 
-  if (loadingMap.fetching) {
-    return <h6>Loading ...</h6>;
-  }
+  if (loadingMap.fetching) return <h6>Loading ...</h6>;
 
   if (errorMap.fetching) {
     return (
@@ -61,6 +79,7 @@ export default function PatientList({
                     variant="link"
                     size="sm"
                     onClick={onDeleteButtonClick}
+                    disabled={loadingMap.removing}
                     data-id={patient.uuid}
                   >
                     Edit
@@ -70,7 +89,9 @@ export default function PatientList({
                     size="sm"
                     className="text-danger"
                     onClick={onDeleteButtonClick}
+                    disabled={loadingMap.removing}
                     data-id={patient.uuid}
+                    data-name={patient.name}
                   >
                     Delete
                   </Button>
@@ -80,6 +101,7 @@ export default function PatientList({
           })}
         </tbody>
       </Table>
+      <ConfirmModal onHide={toggleConfirmModal} {...confirmModal} />
     </>
   );
 }
