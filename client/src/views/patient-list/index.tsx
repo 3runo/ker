@@ -63,6 +63,15 @@ export default function PatientList({
                     onClick={onDeleteButtonClick}
                     data-id={patient.uuid}
                   >
+                    Edit
+                  </Button>
+                  <Button
+                    variant="link"
+                    size="sm"
+                    className="text-danger"
+                    onClick={onDeleteButtonClick}
+                    data-id={patient.uuid}
+                  >
                     Delete
                   </Button>
                 </td>

@@ -14,6 +14,14 @@ export function isString(item: any): boolean {
   return typeof item === 'string';
 }
 
+export function isPromise(obj: any) {
+  return (
+    !!obj &&
+    (typeof obj === 'object' || typeof obj === 'function') &&
+    typeof obj.then === 'function'
+  );
+}
+
 export function isEmptyObj(obj?: Object) {
   return obj && obj.constructor === Object && Object.keys(obj).length === 0;
 }

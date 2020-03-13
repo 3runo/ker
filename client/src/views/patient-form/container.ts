@@ -1,11 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from '../../state/store';
-import {
-  postPatientAction,
-  PatientsState,
-  PatientActions,
-} from '../../state/patients/';
+import { postPatientAction, PatientsState } from '../../state/patients/';
 import { postPatient } from '../../state/patients/api';
 import { serializeFormValues } from '../../helpers/dom';
 import PatientForm from './';
@@ -13,9 +9,7 @@ import PatientForm from './';
 type StateProps = PatientsState;
 type OwnProps = {};
 type DispatchProps = {
-  onFormSubmit: (
-    e: React.FormEvent<HTMLFormElement>
-  ) => { type: PatientActions; payload: any };
+  onFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 };
 
 const mapStateToProps = (state: RootState) => ({ ...state.patients });
@@ -24,7 +18,16 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onFormSubmit: function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const payload = serializeFormValues(e);
-    return dispatch(postPatientAction(postPatient('token-here', payload)));
+    dispatch(
+      postPatientAction(
+        postPatient('token-here', payload).then((res) => {
+          const form: HTMLFormElement | null = window.document.querySelector(
+            'form[name="patient-form"]'
+          );
+          form && form.reset();
+        })
+      )
+    );
   },
 });
 

@@ -1,4 +1,4 @@
-import { omit } from 'lodash/fp';
+import omit from 'lodash/fp/omit';
 import { Patient } from '../../types/patients';
 
 // Types

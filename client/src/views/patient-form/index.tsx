@@ -24,7 +24,7 @@ export default function PatientForm({
   return (
     <>
       <h4>Patient Form</h4>
-      <Form onSubmit={onFormSubmit}>
+      <Form onSubmit={onFormSubmit} name="patient-form">
         <Form.Row>
           <Form.Group as={Col} controlId="email">
             <Form.Label>Email</Form.Label>

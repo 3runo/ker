@@ -1,4 +1,4 @@
-import { formatPatientsResponse, handlePostResponse } from '../model';
+import { formatPatientsResponse, handlePostResponse } from '../schema';
 import { deleteJson, getJson, postJson } from '../../../helpers/api';
 
 type TPromise = Promise<any>;

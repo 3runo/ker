@@ -1,4 +1,5 @@
-import { compose, reduce } from 'lodash/fp';
+import compose from 'lodash/fp/compose';
+import reduce from 'lodash/fp/reduce';
 import { nodeListToArray } from './core';
 
 type StringObj = Record<string, string>;
