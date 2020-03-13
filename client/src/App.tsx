@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import AuthContainer from './components/container/';
+import AuthContainer from './components/auth-container/';
 import Header from './views/header/';
 import Home from './views/home';
 import Login from './views/login';

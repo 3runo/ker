@@ -1,4 +1,4 @@
-const isNumber = require('lodash/fp/isNumber');
+const isNumber = require("lodash/fp/isNumber");
 
 function realTypeOf(it) {
   return Object.prototype.toString.call(it);
@@ -19,5 +19,5 @@ function removeEmptyStringProps(obj) {
 module.exports = {
   realTypeOf,
   removeEmptyStringProps,
-  tryParseNumber,
+  tryParseNumber
 };

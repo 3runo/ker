@@ -121,14 +121,6 @@ function actionCreator(type: PatientActions) {
   };
 }
 
-export const doFetchPatients = actionCreator('PATIENTS_FETCH');
-export const doFetchPatientsSuccess = actionCreator('PATIENTS_FETCH_SUCCESS');
-export const doFetchPatientsFail = actionCreator('PATIENTS_FETCH_FAIL');
-
-export const doSavePatient = actionCreator('PATIENTS_SAVE');
-export const doSavePatientSuccess = actionCreator('PATIENTS_SAVE_SUCCESS');
-export const doSavePatientFail = actionCreator('PATIENTS_SAVE_FAIL');
-
-export const doDeletePatient = actionCreator('PATIENTS_DELETE');
-export const doDeletePatientSuccess = actionCreator('PATIENTS_DELETE_SUCCESS');
-export const doDeletePatientFail = actionCreator('PATIENTS_DELETE_FAIL');
+export const getPatientsAction = actionCreator('PATIENTS_FETCH');
+export const postPatientAction = actionCreator('PATIENTS_SAVE');
+export const deletePatientAction = actionCreator('PATIENTS_DELETE');

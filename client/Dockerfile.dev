@@ -1,13 +1,9 @@
 # build process
-FROM node:13-alpine AS builder 
-RUN apk add g++ make python
+FROM nikolaik/python-nodejs:python3.8-nodejs13-alpine AS builder 
 
 # Define workig directory inside the container
 RUN mkdir /app
 WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
 
 # Install dependencies
 COPY ./yarn.lock ./yarn.lock

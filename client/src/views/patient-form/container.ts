@@ -2,9 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from '../../state/store';
 import {
-  doSavePatient,
-  doSavePatientSuccess,
-  doSavePatientFail,
+  postPatientAction,
   PatientsState,
   PatientActions,
 } from '../../state/patients/';
@@ -17,7 +15,7 @@ type OwnProps = {};
 type DispatchProps = {
   onFormSubmit: (
     e: React.FormEvent<HTMLFormElement>
-  ) => Promise<void | { type: PatientActions; payload: any }>;
+  ) => { type: PatientActions; payload: any };
 };
 
 const mapStateToProps = (state: RootState) => ({ ...state.patients });
@@ -26,13 +24,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   onFormSubmit: function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const payload = serializeFormValues(e);
-
-    dispatch(doSavePatient(payload));
-    return postPatient('inform-token-here', payload)
-      .then((res) => {
-        dispatch(doSavePatientSuccess(res));
-      })
-      .catch(({ message }) => dispatch(doSavePatientFail(message)));
+    return dispatch(postPatientAction(postPatient('token-here', payload)));
   },
 });
 

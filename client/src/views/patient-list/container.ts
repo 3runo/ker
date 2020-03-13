@@ -2,12 +2,8 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { RootState } from '../../state/store';
 import {
-  doFetchPatients,
-  doFetchPatientsSuccess,
-  doFetchPatientsFail,
-  doDeletePatient,
-  doDeletePatientSuccess,
-  doDeletePatientFail,
+  getPatientsAction,
+  deletePatientAction,
   PatientsState,
   PatientActions,
 } from '../../state/patients/';
@@ -17,7 +13,7 @@ import PatientList from './';
 type StateProps = PatientsState;
 type OwnProps = {};
 type DispatchProps = {
-  fetchPatients: () => Promise<void | { type: PatientActions; payload: any }>;
+  fetchPatients: () => { type: PatientActions; payload: any };
   deletePatient: (
     uuid: string,
     callback?: Function
@@ -27,24 +23,18 @@ type DispatchProps = {
 const mapStateToProps = (state: RootState) => ({ ...state.patients });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  fetchPatients: function fetchPatientsThunk(payload: Object) {
-    dispatch(doFetchPatients(payload));
-    return getPatients('inform-token-here')
-      .then((res) => dispatch(doFetchPatientsSuccess(res)))
-      .catch((res) => dispatch(doFetchPatientsFail(res)));
+  fetchPatients: function fetchPatientsThunk() {
+    return dispatch(getPatientsAction(getPatients('token-here')));
   },
 
-  deletePatient: function deletePatientThunk(
-    uuid: string,
-    callback?: Function
-  ) {
-    dispatch(doDeletePatient(uuid));
-    return deletePatient('inform-token-here', uuid)
-      .then((res) => {
-        dispatch(doDeletePatientSuccess(res));
-        if (typeof callback === 'function') callback();
-      })
-      .catch((res) => dispatch(doDeletePatientFail(res)));
+  deletePatient: function deletePatientThunk(id: string, callback?: Function) {
+    return dispatch(
+      deletePatientAction(
+        deletePatient('token-here', id).then(() => {
+          typeof callback === 'function' && callback();
+        })
+      )
+    );
   },
 });
 
