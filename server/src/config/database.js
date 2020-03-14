@@ -14,7 +14,7 @@ AWS.config.update({
 });
 
 module.exports = {
-  // dynamoDB: new AWS.DynamoDB(sdkConfig),
+  dynamoDB: new AWS.DynamoDB(sdkConfig),
   dynamoDBCli: new AWS.DynamoDB.DocumentClient(sdkConfig),
   awsSDK: AWS
 };

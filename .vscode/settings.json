@@ -10,8 +10,8 @@
   "editor.rulers": [80],
   "editor.tabSize": 2,
   "workbench.colorCustomizations": {
-    "editorRuler.foreground": "#310029",
-    "statusBar.background": "#005757"
+    "editorRuler.foreground": "#29572b",
+    "statusBar.background": "#29572b"
   },
   "code-runner.clearPreviousOutput": true,
   "cSpell.words": [
