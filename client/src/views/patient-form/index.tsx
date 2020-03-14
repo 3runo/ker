@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
@@ -6,14 +7,24 @@ import Form from 'react-bootstrap/Form';
 import { PatientFormProps } from './container';
 
 export default function PatientForm({
-  onFormSubmit,
-  loadingMap,
+  current: patientData,
   errorMap,
+  loadingMap,
+  fetchPatient,
+  onFormSubmit,
 }: PatientFormProps) {
   const ref = useRef(-1);
   const [showError, setShowError] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);
+  const { id: patientId } = useParams();
+  console.log(patientData);
 
+  // load patient data
+  useEffect(() => {
+    if (patientId) fetchPatient(patientId);
+  }, [patientId]);
+
+  // show success message
   useEffect(() => {
     if (loadingMap.saving) ref.current = 0;
     if (!loadingMap.saving && !errorMap.saving && ref.current === 0) {
@@ -31,6 +42,7 @@ export default function PatientForm({
             <Form.Control
               type="email"
               name="input-email"
+              defaultValue={patientId ? patientData?.email : ''}
               placeholder="Enter email"
               required
             />
@@ -40,8 +52,9 @@ export default function PatientForm({
             <Form.Label>Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Name"
               name="input-name"
+              defaultValue={patientId ? patientData?.name : ''}
+              placeholder="Name"
               required
             />
           </Form.Group>
@@ -51,8 +64,9 @@ export default function PatientForm({
             <Form.Label>Phone</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter Phone"
               name="input-phone"
+              defaultValue={patientId ? patientData?.phone : ''}
+              placeholder="Enter Phone"
             />
           </Form.Group>
 
@@ -60,8 +74,9 @@ export default function PatientForm({
             <Form.Label>Birthday</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Birthday"
               name="input-birthday"
+              defaultValue={patientId ? patientData?.birthday : ''}
+              placeholder="Birthday"
             />
           </Form.Group>
 
@@ -69,14 +84,20 @@ export default function PatientForm({
             <Form.Label>First Contact</Form.Label>
             <Form.Control
               type="text"
-              placeholder="From where you heard about me"
               name="input-firstContact"
+              defaultValue={patientId ? patientData?.firstContact : ''}
+              placeholder="From where you heard about me"
             />
           </Form.Group>
         </Form.Row>
         <Form.Group controlId="address">
           <Form.Label>Address</Form.Label>
-          <Form.Control placeholder="1234 Main St" name="input-address" />
+          <Form.Control
+            type="text"
+            name="input-address"
+            placeholder="1234 Main St"
+            defaultValue={patientId ? patientData?.address : ''}
+          />
         </Form.Group>
         <Form.Group controlId="notes">
           <Form.Label>Notes</Form.Label>
@@ -84,8 +105,12 @@ export default function PatientForm({
             placeholder="Notes"
             className="form-control"
             name="input-notes"
+            defaultValue={patientId ? patientData?.notes : ''}
           />
         </Form.Group>
+        {typeof patientData !== undefined && (
+          <input type="hidden" name="input-id" defaultValue={patientId} />
+        )}
         <Button variant="primary" type="submit" disabled={loadingMap.saving}>
           Submit
         </Button>{' '}

@@ -6,17 +6,21 @@ export type PatientActions =
   | 'PATIENTS_FETCH'
   | 'PATIENTS_FETCH_SUCCESS'
   | 'PATIENTS_FETCH_FAIL'
-  | 'PATIENTS_SAVE'
-  | 'PATIENTS_SAVE_SUCCESS'
-  | 'PATIENTS_SAVE_FAIL'
-  | 'PATIENTS_DELETE'
-  | 'PATIENTS_DELETE_SUCCESS'
-  | 'PATIENTS_DELETE_FAIL';
+  | 'PATIENT_FETCH'
+  | 'PATIENT_FETCH_SUCCESS'
+  | 'PATIENT_FETCH_FAIL'
+  | 'PATIENT_SAVE'
+  | 'PATIENT_SAVE_SUCCESS'
+  | 'PATIENT_SAVE_FAIL'
+  | 'PATIENT_DELETE'
+  | 'PATIENT_DELETE_SUCCESS'
+  | 'PATIENT_DELETE_FAIL';
 
 export type PatientsState = {
+  current: Patient | undefined;
   list: Array<Patient>;
-  loadingMap: { fetching?: boolean; saving?: boolean; removing?: boolean };
   errorMap: { fetching?: string; saving?: string; removing?: string };
+  loadingMap: { fetching?: boolean; saving?: boolean; removing?: boolean };
 };
 
 export type PatientsAction<T = any> = {
@@ -25,9 +29,10 @@ export type PatientsAction<T = any> = {
 };
 
 export const initialState: PatientsState = {
+  current: undefined,
   list: [],
-  loadingMap: {},
   errorMap: {},
+  loadingMap: {},
 };
 
 const omitFetching = omit(['fetching']);
@@ -49,6 +54,7 @@ export function patientsReducer(
 
   if (action.type === 'PATIENTS_FETCH_SUCCESS') {
     return {
+      ...state,
       list: action.payload,
       loadingMap: omitFetching(state.loadingMap),
       errorMap: omitFetching(state.errorMap),
@@ -63,7 +69,32 @@ export function patientsReducer(
     };
   }
 
-  if (action.type === 'PATIENTS_SAVE') {
+  if (action.type === 'PATIENT_FETCH') {
+    return {
+      ...state,
+      loadingMap: { ...state.loadingMap, fetching: true },
+      errorMap: omitFetching(state.errorMap),
+    };
+  }
+
+  if (action.type === 'PATIENT_FETCH_SUCCESS') {
+    return {
+      ...state,
+      current: action.payload,
+      loadingMap: omitFetching(state.loadingMap),
+      errorMap: omitFetching(state.errorMap),
+    };
+  }
+
+  if (action.type === 'PATIENT_FETCH_FAIL') {
+    return {
+      ...state,
+      loadingMap: omitFetching(state.loadingMap),
+      errorMap: { ...state.errorMap, fetching: action.payload },
+    };
+  }
+
+  if (action.type === 'PATIENT_SAVE') {
     return {
       ...state,
       loadingMap: { ...state.loadingMap, saving: true },
@@ -71,15 +102,16 @@ export function patientsReducer(
     };
   }
 
-  if (action.type === 'PATIENTS_SAVE_SUCCESS') {
+  if (action.type === 'PATIENT_SAVE_SUCCESS') {
     return {
       ...state,
+      current: undefined,
       loadingMap: omitSaving(state.loadingMap),
       errorMap: omitSaving(state.errorMap),
     };
   }
 
-  if (action.type === 'PATIENTS_SAVE_FAIL') {
+  if (action.type === 'PATIENT_SAVE_FAIL') {
     return {
       ...state,
       loadingMap: omitSaving(state.loadingMap),
@@ -87,7 +119,7 @@ export function patientsReducer(
     };
   }
 
-  if (action.type === 'PATIENTS_DELETE') {
+  if (action.type === 'PATIENT_DELETE') {
     return {
       ...state,
       loadingMap: { ...state.loadingMap, removing: true },
@@ -95,7 +127,7 @@ export function patientsReducer(
     };
   }
 
-  if (action.type === 'PATIENTS_DELETE_SUCCESS') {
+  if (action.type === 'PATIENT_DELETE_SUCCESS') {
     return {
       ...state,
       loadingMap: omitRemoving(state.loadingMap),
@@ -103,7 +135,7 @@ export function patientsReducer(
     };
   }
 
-  if (action.type === 'PATIENTS_DELETE_FAIL') {
+  if (action.type === 'PATIENT_DELETE_FAIL') {
     return {
       ...state,
       loadingMap: omitRemoving(state.loadingMap),
@@ -122,5 +154,6 @@ function actionCreator(type: PatientActions) {
 }
 
 export const getPatientsAction = actionCreator('PATIENTS_FETCH');
-export const postPatientAction = actionCreator('PATIENTS_SAVE');
-export const deletePatientAction = actionCreator('PATIENTS_DELETE');
+export const getPatientAction = actionCreator('PATIENT_FETCH');
+export const postPatientAction = actionCreator('PATIENT_SAVE');
+export const deletePatientAction = actionCreator('PATIENT_DELETE');

@@ -1,4 +1,5 @@
 export type Patient = {
+  id?: string;
   uuid: string;
   firstContact: string;
   name: string;

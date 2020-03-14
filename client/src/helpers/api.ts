@@ -4,9 +4,10 @@ type TFetchInit = RequestInit & { url: string };
 type TDefineFetch = (url: string, token?: string, payload?: any) => TFetchInit;
 type TFetch = (url: string, token?: string, payload?: any) => Promise<any>;
 
+const deleteJson: TFetch = compose([mergeFetchConfig, defineFetch('DELETE')]);
 const getJson: TFetch = compose([mergeFetchConfig, defineFetch('GET')]);
 const postJson: TFetch = compose([mergeFetchConfig, defineFetch('POST')]);
-const deleteJson: TFetch = compose([mergeFetchConfig, defineFetch('DELETE')]);
+const putJson: TFetch = compose([mergeFetchConfig, defineFetch('PUT')]);
 
 function toJson(response: Response) {
   return response.status === 204 ? '' : response.json();
@@ -38,4 +39,4 @@ function mergeFetchConfig({ url, headers, ...rest }: TFetchInit) {
   }).then(toJson);
 }
 
-export { getJson, postJson, deleteJson };
+export { deleteJson, getJson, postJson, putJson };

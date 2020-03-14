@@ -19,7 +19,7 @@ export default function Header({ isAuthenticated }: AuthState) {
         <Nav className="mr-auto">
           {isAuthenticated && (
             <>
-              <Link to="/add-patients/" className="nav-link" role="button">
+              <Link to="/patient-form/" className="nav-link" role="button">
                 Add patient
               </Link>
               <Link to="/patients/" className="nav-link" role="button">

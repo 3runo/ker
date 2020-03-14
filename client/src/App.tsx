@@ -27,7 +27,7 @@ function App(props: AuthState) {
         <Header {...props} />
         <Route path="/" exact component={Home} />
         <Route path="/login/" component={Login} />
-        <Route path="/add-patients/" component={PatientForm} />
+        <Route path="/patient-form/:id?" component={PatientForm} />
         <Route path="/calendar/" component={Calendar} />
         <Route path="/patient/:id/" component={PatientDetail} />
         <Route path="/patients/" component={PatientList} />

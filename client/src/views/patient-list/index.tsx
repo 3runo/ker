@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Alert from 'react-bootstrap/Alert';
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
@@ -62,6 +63,7 @@ export default function PatientList({
           <tr>
             <th>Name</th>
             <th>Phone</th>
+            <th>Active</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -70,20 +72,25 @@ export default function PatientList({
             return (
               <tr key={patient.uuid}>
                 <td>
-                  <div>{patient.name}</div>
-                  <small>{patient.email}</small>
+                  <div className="d-flex flex-wrap align-items-center justify-content-between">
+                    <strong style={{ fontWeight: 600 }}>{patient.name}</strong>
+                    <small className="font-weight-light">{patient.email}</small>
+                  </div>
                 </td>
-                <td>{patient.phone}</td>
                 <td>
-                  <Button
-                    variant="link"
-                    size="sm"
-                    onClick={onDeleteButtonClick}
-                    disabled={loadingMap.removing}
-                    data-id={patient.uuid}
+                  <span className="text-muted font-weight-light">
+                    {patient.phone}
+                  </span>
+                </td>
+                <td>-</td>
+                <td>
+                  <Link
+                    to={`/patient-form/${patient.uuid}`}
+                    className="btn btn-link btn-sm"
+                    role="button"
                   >
                     Edit
-                  </Button>
+                  </Link>
                   <Button
                     variant="link"
                     size="sm"

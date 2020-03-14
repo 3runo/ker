@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import dispatchAsyncAction from './middlewares/async';
-// import actionLogger from './middlewares/logger';
+import actionLogger from './middlewares/logger';
 import { authReducer } from './auth/';
 import { patientsReducer } from './patients/';
 
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 const appStore = createStore(
   rootReducer,
   undefined,
-  applyMiddleware(dispatchAsyncAction)
+  applyMiddleware(actionLogger, dispatchAsyncAction)
 );
 
 export type RootState = ReturnType<typeof rootReducer>;
