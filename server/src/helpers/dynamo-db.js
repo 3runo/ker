@@ -8,18 +8,28 @@ function keyInTable(table, obj) {
   return { TableName: table, Key: obj };
 }
 
-function uniq(shardId) {
-  const number = 512;
-  const randomId = Math.floor(Math.random() * number);
-  let ts = new Date().getTime() - 553262400000;
-  ts = ts * 64;
-  ts = ts + shardId;
+function unconditionallyUpdater(obj) {
+  const baseObj = {
+    UpdateExpression: "",
+    ExpressionAttributeNames: {},
+    ExpressionAttributeValues: {}
+  };
 
-  return ts * number + (randomId % number);
+  return Object.entries(obj).reduce((acc, [key, value], i) => {
+    acc.UpdateExpression =
+      i === 0
+        ? `${acc.UpdateExpression}set #${i} = :${i}`
+        : `${acc.UpdateExpression}, #${i} = :${i}`;
+
+    acc.ExpressionAttributeNames[`#${i}`] = key;
+    acc.ExpressionAttributeValues[`:${i}`] = value;
+
+    return acc;
+  }, baseObj);
 }
 
 module.exports = {
   itemInTable: curryN(2, itemInTable),
   keyInTable: curryN(2, keyInTable),
-  uniq
+  unconditionallyUpdater
 };

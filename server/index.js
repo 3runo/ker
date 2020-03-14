@@ -17,8 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Routes
 app.get("/", routeRoot);
 app.get("/patients", routePatient.patients);
-app.get("/patient/:id", routePatient.patient);
 app.post("/patient", routePatient.patient);
+app.get("/patient/:id", routePatient.patient);
+app.put("/patient/:id", routePatient.patient);
 app.delete("/patient/:id", routePatient.patient);
 
 // App initialization
