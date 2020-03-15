@@ -4,8 +4,14 @@ const users = {
     ReadCapacityUnits: 5,
     WriteCapacityUnits: 5
   },
-  AttributeDefinitions: [{ AttributeName: "uuid", AttributeType: "S" }],
-  KeySchema: [{ AttributeName: "uuid", KeyType: "HASH" }]
+  KeySchema: [
+    { AttributeName: "email", KeyType: "HASH" },
+    { AttributeName: "uuid", KeyType: "RANGE" }
+  ],
+  AttributeDefinitions: [
+    { AttributeName: "email", AttributeType: "S" },
+    { AttributeName: "uuid", AttributeType: "S" }
+  ]
 };
 
 module.exports = users;

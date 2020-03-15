@@ -8,6 +8,15 @@ function keyInTable(table, obj) {
   return { TableName: table, Key: obj };
 }
 
+function queryFindUserByEmail(email) {
+  return {
+    TableName: "users",
+    KeyConditionExpression: "#email = :email",
+    ExpressionAttributeNames: { "#email": "email" },
+    ExpressionAttributeValues: { ":email": email }
+  };
+}
+
 function unconditionallyUpdater(obj) {
   const baseObj = {
     UpdateExpression: "",
@@ -31,5 +40,6 @@ function unconditionallyUpdater(obj) {
 module.exports = {
   itemInTable: curryN(2, itemInTable),
   keyInTable: curryN(2, keyInTable),
+  queryFindUserByEmail,
   unconditionallyUpdater
 };

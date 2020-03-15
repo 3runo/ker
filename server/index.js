@@ -4,8 +4,10 @@ const compression = require("compression");
 const { onAppListen } = require("./src/config")(app);
 const { dynamoDB } = require("./src/config/database");
 const modelsMigration = require("./src/models");
-const routePatient = require("./src/routes/patient");
 const routeRoot = require("./src/routes/root");
+const routeSignup = require("./src/routes/signup");
+const routeLogin = require("./src/routes/login");
+const routePatient = require("./src/routes/patient");
 const port = process.env.PORT || 4000;
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -16,11 +18,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.get("/", routeRoot);
-app.get("/patients", routePatient.patients);
-app.post("/patient", routePatient.patient);
-app.get("/patient/:id", routePatient.patient);
-app.put("/patient/:id", routePatient.patient);
-app.delete("/patient/:id", routePatient.patient);
+app.post("/signup", routeSignup.postSignup);
+app.post("/login", routeLogin.postLogin);
+
+app.get("/patients", routePatient.getPatients);
+
+app.post("/patient", routePatient.postPatient);
+app.get("/patient/:id", routePatient.getPatient);
+app.put("/patient/:id", routePatient.putPatient);
+app.delete("/patient/:id", routePatient.deletePatient);
 
 // App initialization
 app.set("port", port);
