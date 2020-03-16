@@ -1,11 +1,11 @@
-const bcrypt = require("bcrypt");
-const uuid = require("uuid");
-const { dbCli } = require("../config/database");
-const { tokenGenerator } = require("../config/auth");
-const { genericCallback } = require("../helpers/express");
-const { itemInTable, queryFindUserByEmail } = require("../helpers/dynamo-db");
+const bcrypt = require('bcrypt');
+const uuid = require('uuid');
+const { dbCli } = require('../config/database');
+const { tokenGenerator } = require('../config/auth');
+const { itemInTable, queryFindUserBy } = require('../helpers/db');
 
-const addItemInUsers = itemInTable("users");
+const addItemInUsers = itemInTable('users');
+const queryFindUserByEmail = queryFindUserBy('email');
 
 // post /signup
 function postSignup(req, res, next) {
@@ -14,7 +14,7 @@ function postSignup(req, res, next) {
   if (!email || !password) {
     return res
       .status(422)
-      .send({ statusCode: 422, message: "Required fields are missing" });
+      .send({ statusCode: 422, message: 'Required fields are missing' });
   }
 
   dbCli.query(queryFindUserByEmail(email), function dbQuery(err, data) {
@@ -22,7 +22,7 @@ function postSignup(req, res, next) {
     if (data.Count > 0) {
       return res
         .status(422)
-        .send({ statusCode: 422, message: "Email is in use" });
+        .send({ statusCode: 422, message: 'Email is in use' });
     }
 
     bcrypt.hash(password, 10, function hashPassword(err, hashedPassword) {
@@ -32,7 +32,7 @@ function postSignup(req, res, next) {
         email,
         password: hashedPassword,
         uuid: uuid.v4(),
-        created: new Date().getTime()
+        created: new Date().getTime(),
       };
 
       dbCli.put(addItemInUsers(newUser), function dbSave(err) {
@@ -45,5 +45,5 @@ function postSignup(req, res, next) {
 }
 
 module.exports = {
-  postSignup
+  postSignup,
 };

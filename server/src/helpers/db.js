@@ -1,4 +1,4 @@
-const curryN = require("lodash/fp/curryN");
+const curryN = require('lodash/fp/curryN');
 
 function itemInTable(table, obj) {
   return { TableName: table, Item: obj };
@@ -8,20 +8,20 @@ function keyInTable(table, obj) {
   return { TableName: table, Key: obj };
 }
 
-function queryFindUserByEmail(email) {
+function queryFindUserBy(prop, value) {
   return {
-    TableName: "users",
-    KeyConditionExpression: "#email = :email",
-    ExpressionAttributeNames: { "#email": "email" },
-    ExpressionAttributeValues: { ":email": email }
+    TableName: 'users',
+    KeyConditionExpression: '#k = :v',
+    ExpressionAttributeNames: { '#k': prop },
+    ExpressionAttributeValues: { ':v': value },
   };
 }
 
 function unconditionallyUpdater(obj) {
   const baseObj = {
-    UpdateExpression: "",
+    UpdateExpression: '',
     ExpressionAttributeNames: {},
-    ExpressionAttributeValues: {}
+    ExpressionAttributeValues: {},
   };
 
   return Object.entries(obj).reduce((acc, [key, value], i) => {
@@ -40,6 +40,6 @@ function unconditionallyUpdater(obj) {
 module.exports = {
   itemInTable: curryN(2, itemInTable),
   keyInTable: curryN(2, keyInTable),
-  queryFindUserByEmail,
-  unconditionallyUpdater
+  queryFindUserBy: curryN(2, queryFindUserBy),
+  unconditionallyUpdater,
 };

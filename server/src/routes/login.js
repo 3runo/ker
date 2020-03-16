@@ -6,5 +6,5 @@ function postLogin(req, res) {
 }
 
 module.exports = {
-  postLogin
+  postLogin,
 };

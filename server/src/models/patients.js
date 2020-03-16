@@ -1,11 +1,11 @@
 const patients = {
-  TableName: "patients",
+  TableName: 'patients',
   ProvisionedThroughput: {
     ReadCapacityUnits: 5,
-    WriteCapacityUnits: 5
+    WriteCapacityUnits: 5,
   },
-  AttributeDefinitions: [{ AttributeName: "uuid", AttributeType: "S" }],
-  KeySchema: [{ AttributeName: "uuid", KeyType: "HASH" }]
+  AttributeDefinitions: [{ AttributeName: 'uuid', AttributeType: 'S' }],
+  KeySchema: [{ AttributeName: 'uuid', KeyType: 'HASH' }],
 };
 
 module.exports = patients;
