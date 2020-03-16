@@ -2,28 +2,23 @@ const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const { dbCli } = require('../config/database');
 const { tokenGenerator } = require('../config/auth');
-const { itemInTable, queryFindUserBy } = require('../helpers/db');
+const { itemInTable } = require('../helpers/db');
+const { getUserBy } = require('../queries/user');
+const { errorResponse } = require('../helpers/express');
 
 const addItemInUsers = itemInTable('users');
-const queryFindUserByEmail = queryFindUserBy('email');
+const queryUserUserByEmail = getUserBy('email');
 
 // post /signup
 function postSignup(req, res, next) {
   const { email, password } = req.body;
+  const respond422 = errorResponse(res)(422);
 
-  if (!email || !password) {
-    return res
-      .status(422)
-      .send({ statusCode: 422, message: 'Required fields are missing' });
-  }
+  if (!email || !password) return respond422('Required fields are missing');
 
-  dbCli.query(queryFindUserByEmail(email), function dbQuery(err, data) {
+  dbCli.query(queryUserUserByEmail(email), function dbQuery(err, data) {
     if (err) return next(err);
-    if (data.Count > 0) {
-      return res
-        .status(422)
-        .send({ statusCode: 422, message: 'Email is in use' });
-    }
+    if (data.Count > 0) return respond422('Email is in use');
 
     bcrypt.hash(password, 10, function hashPassword(err, hashedPassword) {
       if (err) return next(err);

@@ -8,15 +8,6 @@ function keyInTable(table, obj) {
   return { TableName: table, Key: obj };
 }
 
-function queryFindUserBy(prop, value) {
-  return {
-    TableName: 'users',
-    KeyConditionExpression: '#k = :v',
-    ExpressionAttributeNames: { '#k': prop },
-    ExpressionAttributeValues: { ':v': value },
-  };
-}
-
 function unconditionallyUpdater(obj) {
   const baseObj = {
     UpdateExpression: '',
@@ -40,6 +31,5 @@ function unconditionallyUpdater(obj) {
 module.exports = {
   itemInTable: curryN(2, itemInTable),
   keyInTable: curryN(2, keyInTable),
-  queryFindUserBy: curryN(2, queryFindUserBy),
   unconditionallyUpdater,
 };

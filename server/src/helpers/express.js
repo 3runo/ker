@@ -1,3 +1,5 @@
+const curryN = require('lodash/fp/curryN');
+
 function genericCallback(res) {
   return function genericCallbackInner(err, data) {
     if (err) {
@@ -10,4 +12,11 @@ function genericCallback(res) {
   };
 }
 
-module.exports = { genericCallback };
+function errorResponse(res, statusCode, message) {
+  return res.status(statusCode).send({ statusCode, message });
+}
+
+module.exports = {
+  genericCallback,
+  errorResponse: curryN(3, errorResponse),
+};

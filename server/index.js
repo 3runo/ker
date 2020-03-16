@@ -4,10 +4,12 @@ const compression = require('compression');
 const { onAppListen } = require('./src/config')(app);
 const { dynamoDB } = require('./src/config/database');
 const modelsMigration = require('./src/models');
+const { jwtRequired, signInRequired } = require('./src/services/passport');
 const routeRoot = require('./src/routes/root');
 const routeSignup = require('./src/routes/signup');
 const routeLogin = require('./src/routes/login');
 const routePatient = require('./src/routes/patient');
+
 const port = process.env.PORT || 4000;
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -21,12 +23,12 @@ app.get('/', routeRoot);
 app.post('/signup', routeSignup.postSignup);
 app.post('/login', routeLogin.postLogin);
 
-app.get('/patients', routePatient.getPatients);
-
-app.post('/patient', routePatient.postPatient);
-app.get('/patient/:id', routePatient.getPatient);
-app.put('/patient/:id', routePatient.putPatient);
-app.delete('/patient/:id', routePatient.deletePatient);
+// Authenticated routes
+app.get('/patients', jwtRequired, routePatient.getPatients);
+app.post('/patient', jwtRequired, routePatient.postPatient);
+app.get('/patient/:id', jwtRequired, routePatient.getPatient);
+app.put('/patient/:id', jwtRequired, routePatient.putPatient);
+app.delete('/patient/:id', jwtRequired, routePatient.deletePatient);
 
 // App initialization
 app.set('port', port);
