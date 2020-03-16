@@ -10,7 +10,7 @@ export type AuthState = {
 
 export const initialState = {
   errorMessage: '',
-  isAuthenticated: true, // TODO: Implement authentication feature
+  isAuthenticated: false,
   loading: false,
   token: '',
 };

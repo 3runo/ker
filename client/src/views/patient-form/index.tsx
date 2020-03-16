@@ -22,7 +22,7 @@ export default function PatientForm({
   // load patient data
   useEffect(() => {
     if (patientId) fetchPatient(patientId);
-  }, [patientId]);
+  }, [patientId, fetchPatient]);
 
   // show success message
   useEffect(() => {

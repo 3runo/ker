@@ -7,7 +7,6 @@ import {
   PatientActions,
   PatientsState,
 } from '../../state/patients/';
-import { Patient } from '../../types/patients';
 import { postPatient, getPatient, putPatient } from '../../state/patients/api';
 import { serializeFormValues } from '../../helpers/dom';
 import PatientForm from './';
