@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AuthContainer from './components/auth-container/';
@@ -9,17 +10,23 @@ import PatientForm from './views/patient-form/container';
 import PatientList from './views/patient-list/container';
 import { RootState } from './state/store';
 import { AuthState } from './state/auth/';
+import { getValidateToken } from './state/auth/api/';
+import { authAction } from './state/auth/';
 
-function PatientDetail() {
-  return <h4>PatientDetail</h4>;
-}
+type StateProps = AuthState;
+type OwnProps = { history: any };
+type DispatchProps = { validateToken: (e: string) => void };
+type AppProps = StateProps & DispatchProps;
 
-function Calendar() {
-  return <h4>Calendar</h4>;
-}
+const PatientDetail = () => <h4>PatientDetail</h4>;
+const Calendar = () => <h4>Calendar</h4>;
+function App(props: AppProps) {
+  const { isAuthenticated, validateToken } = props;
 
-function App(props: AuthState) {
-  const { isAuthenticated } = props;
+  useEffect(() => {
+    const token = window.localStorage.getItem('ker_token');
+    if (token && !isAuthenticated) validateToken(token);
+  }, [isAuthenticated, validateToken]);
 
   return (
     <Router>
@@ -37,5 +44,21 @@ function App(props: AuthState) {
 }
 
 const mapStateToProps = (state: RootState) => ({ ...state.auth });
-// @ts-ignore
-export default connect<AuthState, any, any>(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
+  validateToken: function validateToken(token: string) {
+    dispatch(
+      authAction(
+        getValidateToken(token).catch((err) => {
+          window.localStorage.removeItem('ker_token');
+          return Promise.reject(err); // keeping promise chain
+        })
+      )
+    );
+  },
+});
+
+export default connect<StateProps, DispatchProps, OwnProps>(
+  // @ts-ignore
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

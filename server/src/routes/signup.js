@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const uuid = require('uuid');
 const { dbCli } = require('../config/database');
-const { tokenGenerator } = require('../config/auth');
+const { generateJwtToken } = require('../config/auth');
 const { itemInTable } = require('../helpers/db');
 const { getUserBy } = require('../queries/user');
 const { errorResponse } = require('../helpers/express');
@@ -11,7 +11,7 @@ const queryUserUserByEmail = getUserBy('email');
 
 // post /signup
 function postSignup(req, res, next) {
-  const { email, password } = req.body;
+  const { email, password, userName } = req.body;
   const respond422 = errorResponse(res)(422);
 
   if (!email || !password) return respond422('Required fields are missing');
@@ -24,6 +24,7 @@ function postSignup(req, res, next) {
       if (err) return next(err);
 
       const newUser = {
+        userName,
         email,
         password: hashedPassword,
         uuid: uuid.v4(),
@@ -33,7 +34,7 @@ function postSignup(req, res, next) {
       dbCli.put(addItemInUsers(newUser), function dbSave(err) {
         return err
           ? next(err)
-          : res.status(202).send({ token: tokenGenerator(newUser.uuid) });
+          : res.status(202).send({ token: generateJwtToken(newUser.uuid) });
       });
     });
   });

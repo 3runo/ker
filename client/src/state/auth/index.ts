@@ -6,6 +6,7 @@ export type AuthState = {
   isAuthenticated: boolean;
   loading: boolean;
   token: string;
+  userName: string;
 };
 
 export const initialState = {
@@ -13,6 +14,7 @@ export const initialState = {
   isAuthenticated: false,
   loading: false,
   token: '',
+  userName: '',
 };
 
 // Reducer
@@ -30,6 +32,7 @@ export function authReducer(
       isAuthenticated: true,
       loading: false,
       token: action.payload.token,
+      userName: action.payload.userName,
     };
   }
 
@@ -39,6 +42,7 @@ export function authReducer(
       isAuthenticated: true,
       loading: false,
       token: '',
+      userName: '',
     };
   }
 

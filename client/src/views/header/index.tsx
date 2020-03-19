@@ -4,12 +4,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 import { AuthState } from '../../state/auth/';
 
-export default function Header({ isAuthenticated }: AuthState) {
+export default function Header({ isAuthenticated, userName }: AuthState) {
   return (
     <Navbar variant="light" bg="light" expand="lg" className="mb-3">
       <Navbar.Brand>
         {isAuthenticated ? (
-          <Link to="/">Michele Ker</Link>
+          <Link to="/">{userName}</Link>
         ) : (
           <Link to="/login/">Login</Link>
         )}

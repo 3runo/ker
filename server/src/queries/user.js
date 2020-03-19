@@ -12,9 +12,9 @@ function getUserBy(prop, value) {
 function scanUserById(uuid) {
   return {
     TableName: 'users',
-    ProjectionExpression: '#key, email',
-    FilterExpression: '#key = :value',
-    ExpressionAttributeNames: { '#key': 'uuid' },
+    ProjectionExpression: '#uuid, email, userName',
+    FilterExpression: '#uuid = :value',
+    ExpressionAttributeNames: { '#uuid': 'uuid' },
     ExpressionAttributeValues: { ':value': uuid },
   };
 }
@@ -22,9 +22,9 @@ function scanUserById(uuid) {
 function scanUserByEmail(email) {
   return {
     TableName: 'users',
-    ProjectionExpression: '#id, email, password',
-    FilterExpression: '#key = :value',
-    ExpressionAttributeNames: { '#key': 'email', '#id': 'uuid' },
+    ProjectionExpression: '#uuid, email, password, userName',
+    FilterExpression: '#email = :value',
+    ExpressionAttributeNames: { '#email': 'email', '#uuid': 'uuid' },
     ExpressionAttributeValues: { ':value': email },
   };
 }

@@ -4,7 +4,7 @@ const compression = require('compression');
 const { onAppListen } = require('./src/config')(app);
 const { dynamoDB } = require('./src/config/database');
 const modelsMigration = require('./src/models');
-const { jwtRequired, signInRequired } = require('./src/services/passport');
+const { jwtRequired } = require('./src/services/passport');
 const routeRoot = require('./src/routes/root');
 const routeSignup = require('./src/routes/signup');
 const routeLogin = require('./src/routes/login');
@@ -20,8 +20,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.get('/', routeRoot);
-app.post('/signup', routeSignup.postSignup);
+app.get('/validate-token/:token', routeLogin.getValidateToken);
 app.post('/login', routeLogin.postLogin);
+app.post('/signup', routeSignup.postSignup);
 
 // Authenticated routes
 app.get('/patients', jwtRequired, routePatient.getPatients);

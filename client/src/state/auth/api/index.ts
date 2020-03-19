@@ -1,5 +1,5 @@
 import { handlePostResponse } from '../../../helpers/schema';
-import { postJson } from '../../../helpers/api';
+import { postJson, getJson } from '../../../helpers/api';
 
 // login
 export function postLogin(payload: any): Promise<any> {
@@ -8,4 +8,8 @@ export function postLogin(payload: any): Promise<any> {
 
 export function postSignup(payload: any): Promise<any> {
   return postJson('/signup', payload).then(handlePostResponse);
+}
+
+export function getValidateToken(token: string): Promise<any> {
+  return getJson(`/validate-token/${token}`).then(handlePostResponse);
 }
