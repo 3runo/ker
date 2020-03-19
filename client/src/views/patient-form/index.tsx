@@ -17,7 +17,6 @@ export default function PatientForm({
   const [showError, setShowError] = useState(true);
   const [showSuccess, setShowSuccess] = useState(false);
   const { id: patientId } = useParams();
-  console.log(patientData);
 
   // load patient data
   useEffect(() => {

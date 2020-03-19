@@ -29,7 +29,7 @@ export function authReducer(
       errorMessage: '',
       isAuthenticated: true,
       loading: false,
-      token: action.payload,
+      token: action.payload.token,
     };
   }
 
@@ -43,4 +43,8 @@ export function authReducer(
   }
 
   return state;
+}
+
+export function authAction(payload: any) {
+  return { type: 'AUTH', payload };
 }

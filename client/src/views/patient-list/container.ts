@@ -24,13 +24,13 @@ const mapStateToProps = (state: RootState) => ({ ...state.patients });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPatients: function fetchPatientsThunk() {
-    return dispatch(getPatientsAction(getPatients('token-here')));
+    return dispatch(getPatientsAction(getPatients()));
   },
 
   deletePatient: function deletePatientThunk(id: string, callback?: Function) {
     return dispatch(
       deletePatientAction(
-        deletePatient('token-here', id).then(() => {
+        deletePatient(id).then(() => {
           typeof callback === 'function' && callback();
         })
       )

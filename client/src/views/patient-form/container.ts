@@ -26,17 +26,17 @@ const mapStateToProps = (state: RootState) => ({ ...state.patients });
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   fetchPatient: function fetchPatientsThunk(id: string) {
-    return dispatch(getPatientAction(getPatient('token-here', id)));
+    return dispatch(getPatientAction(getPatient(id)));
   },
 
   onFormSubmit: function onFormSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const payload = serializeFormValues(e);
     const persist = payload.id ? putPatient : postPatient;
-    debugger;
+
     dispatch(
       postPatientAction(
-        persist('token-here', payload).then(() => {
+        persist(payload).then(() => {
           const $patientForm = getFormRef();
           $patientForm && $patientForm.reset();
         })

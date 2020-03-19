@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import AuthContainer from './components/auth-container/';
 import Header from './views/header/';
 import Home from './views/home';
-import Login from './views/login';
+import Login from './views/login/container';
 import PatientForm from './views/patient-form/container';
 import PatientList from './views/patient-list/container';
 import { RootState } from './state/store';

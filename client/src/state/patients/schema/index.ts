@@ -20,12 +20,6 @@ const patientMapper = (patient: Patient) => {
   };
 };
 
-export function handlePostResponse(payload: any): Promise<never> | any {
-  return hasError(payload)
-    ? Promise.reject(errorWithCode('message', payload))
-    : payload;
-}
-
 export function formatPatientResponse(payload: any): Promise<never> | any {
   return hasError(payload)
     ? Promise.reject(errorWithCode('patient', payload))
