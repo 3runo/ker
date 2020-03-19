@@ -16,7 +16,6 @@ export default function Login({
         <Form.Control
           type="email"
           name="input-email"
-          defaultValue="bruno.adex@gmail.com"
           placeholder="Enter email"
         />
         <Form.Text className="text-muted">
