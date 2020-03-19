@@ -27,6 +27,8 @@ const mapDispatchToProps = (
         postLogin(payload)
           .then((response) => {
             window.localStorage.setItem('ker_token', response.token);
+            window.sessionStorage.setItem('ker_user', response.userName);
+            window.sessionStorage.setItem('ker_authenticated', '1');
             ownProps.history.replace('/');
             return response; // side effect + keeping promise chain
           })

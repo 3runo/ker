@@ -50,6 +50,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
       authAction(
         getValidateToken(token).catch((err) => {
           window.localStorage.removeItem('ker_token');
+          window.sessionStorage.removeItem('ker_user');
+          window.sessionStorage.removeItem('ker_authenticated');
           return Promise.reject(err); // keeping promise chain
         })
       )

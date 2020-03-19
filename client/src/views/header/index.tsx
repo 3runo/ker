@@ -9,7 +9,7 @@ export default function Header({ isAuthenticated, userName }: AuthState) {
     <Navbar variant="light" bg="light" expand="lg" className="mb-3">
       <Navbar.Brand>
         {isAuthenticated ? (
-          <Link to="/">{userName}</Link>
+          <Link to="/">{userName ?? 'User'}</Link>
         ) : (
           <Link to="/login/">Login</Link>
         )}

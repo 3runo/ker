@@ -5,16 +5,14 @@ export type AuthState = {
   errorMessage: string;
   isAuthenticated: boolean;
   loading: boolean;
-  token: string;
   userName: string;
 };
 
 export const initialState = {
   errorMessage: '',
-  isAuthenticated: false,
+  isAuthenticated: Boolean(window.sessionStorage.getItem('ker_authenticated')),
   loading: false,
-  token: '',
-  userName: '',
+  userName: window.sessionStorage.getItem('ker_user') || '',
 };
 
 // Reducer
@@ -31,7 +29,6 @@ export function authReducer(
       errorMessage: '',
       isAuthenticated: true,
       loading: false,
-      token: action.payload.token,
       userName: action.payload.userName,
     };
   }
@@ -41,7 +38,6 @@ export function authReducer(
       errorMessage: action.payload,
       isAuthenticated: true,
       loading: false,
-      token: '',
       userName: '',
     };
   }
